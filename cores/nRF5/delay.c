@@ -56,6 +56,7 @@ void delay( uint32_t ms )
   } while ( millis() - start < ms ) ;
 }
 
+/*
 void RTC1_IRQHandler(void)
 {
   NRF_RTC1->EVENTS_OVRFLW = 0;
@@ -67,6 +68,7 @@ void RTC1_IRQHandler(void)
 
   overflows = (overflows + 1) & 0xff;
 }
+*/
 
 #ifdef __cplusplus
 }

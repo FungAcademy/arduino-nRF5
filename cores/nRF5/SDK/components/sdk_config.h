@@ -48,7 +48,7 @@
 
 
 #ifndef PEER_MANAGER_ENABLED
-#define PEER_MANAGER_ENABLED 0
+#define PEER_MANAGER_ENABLED 1
 #endif
 
 // <e> NRF_BLE_GATT_ENABLED - nrf_ble_gatt - GATT module
@@ -1751,7 +1751,7 @@
 // <e> RTC_ENABLED - nrf_drv_rtc - RTC peripheral driver
 //==========================================================
 #ifndef RTC_ENABLED
-#define RTC_ENABLED 0
+#define RTC_ENABLED 1
 #endif
 #if  RTC_ENABLED
 // <o> RTC_DEFAULT_CONFIG_FREQUENCY - Frequency  <16-32768>
@@ -1785,21 +1785,21 @@
 
 
 #ifndef RTC0_ENABLED
-#define RTC0_ENABLED 0
+#define RTC0_ENABLED 1
 #endif
 
 // <q> RTC1_ENABLED  - Enable RTC1 instance
 
 
 #ifndef RTC1_ENABLED
-#define RTC1_ENABLED 0
+#define RTC1_ENABLED 1
 #endif
 
 // <q> RTC2_ENABLED  - Enable RTC2 instance
 
 
 #ifndef RTC2_ENABLED
-#define RTC2_ENABLED 0
+#define RTC2_ENABLED 1
 #endif
 
 // <o> NRF_MAXIMUM_LATENCY_US - Maximum possible time[us] in highest priority interrupt
