@@ -16,6 +16,41 @@
 #define ARDUINO_MAIN
 #include "Arduino.h"
 
+extern "C" {
+  #include <app_timer.h>
+  #include <BLE.h>
+  #include "nrf_soc.h"
+}
+
+#define APP_TIMER_PRESCALER     0 /**< Value of the RTC1 PRESCALER register. */
+#define APP_TIMER_OP_QUEUE_SIZE 4 /**< Size of timer operation queues. */
+
+APP_TIMER_DEF(m_main_loop_timer);
+
+/*
+ * @brief Function to sleep until a BLE event is received by the application.
+ */
+static void power_manage(void)
+{
+    ret_code_t err_code = sd_app_evt_wait();
+    APP_ERROR_CHECK(err_code);
+}
+
+static void run_main_loop(void * p_context)
+{
+  loop();
+  if (serialEventRun) serialEventRun();
+}
+
+static void create_timers()
+{
+    uint32_t err_code;
+    // Create timers
+    err_code = app_timer_create(&m_main_loop_timer, APP_TIMER_MODE_REPEATED, run_main_loop);
+    APP_ERROR_CHECK(err_code);
+}
+
+
 // Weak empty variant initialization function.
 // May be redefined by variant files.
 void initVariant() __attribute__((weak));
@@ -26,18 +61,18 @@ void initVariant() { }
  */
 int main( void )
 {
+  APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, NULL);
   init();
-
   initVariant();
-
   delay(1);
-
   setup();
+
+  create_timers();
+  APP_ERROR_CHECK( app_timer_start(m_main_loop_timer, APP_TIMER_TICKS(1, APP_TIMER_PRESCALER), NULL) );
 
   for (;;)
   {
-    loop();
-    if (serialEventRun) serialEventRun();
+    power_manage();
   }
 
   return 0;
