@@ -18,17 +18,19 @@ Does not require a custom bootloader on the device.
 
 ### nRF51
  * [Plain nRF51 MCU](https://www.nordicsemi.com/eng/Products/Bluetooth-low-energy/nRF51822)
- * [BBC micro:bit](https://www.microbit.co.uk/)
+ * [BBC micro:bit](https://microbit.org)
  * [Bluz DK](http://bluz.io)
  * Nordic Semiconductor  [nRF51822 Development Kit](https://www.nordicsemi.com/eng/Products/Bluetooth-low-energy/nRF51822-Development-Kit) + [nRF51422 Development Kit](https://www.nordicsemi.com/eng/Products/ANT/nRF51422-Development-Kit)
   * PCA10000
   * PCA10001, PCA10002, PCA10003, PCA10004 via nRF6310(nRFgo)
+ * [Nordic Semiconductor NRF51 Smart Beacon Kit](https://www.nordicsemi.com/eng/Products/Bluetooth-low-energy/nRF51822-Bluetooth-Smart-Beacon-Kit)
  * [Nordic Semiconductor NRF51 Dongle](http://www.nordicsemi.com/eng/Products/nRF51-Dongle)
  * [OSHChip](http://www.oshchip.org/)
  * [RedBearLab BLE Nano](http://redbearlab.com/blenano/)
  * [RedBearLab nRF51822](http://redbearlab.com/redbearlab-nrf51822/)
  * [Waveshare BLE400](http://www.waveshare.com/wiki/BLE400)
  * [ng-beacon](https://github.com/urish/ng-beacon)
+ * [TinyBLE](https://www.seeedstudio.com/Seeed-Tiny-BLE-BLE-%2B-6DOF-Mbed-Platform-p-2268.html)
 
 ## Installing
 
@@ -51,9 +53,15 @@ No additional setup required.
 
 ##### Linux
 
-No additional setup required.
+For 64-bit Linux users,  ```libc6:i386```, ```libstdc++6:i386```, ```libncurses5:i386``` and ```libudev1:i386``` need to be installed :
+  * ```sudo dpkg --add-architecture i386```
+  * ```sudo apt-get update```
+  * ```sudo apt-get install libc6:i386 libstdc++6:i386 libncurses5:i386 libudev1:i386```    
 
 #####  Windows
+
+###### Driver Setup for mbed devices
+ Download [mbed Windows Serial driver](https://developer.mbed.org/handbook/Windows-serial-configuration#1-download-the-mbed-windows-serial-port)
 
 ###### Driver Setup for Segger J-Link
 
@@ -61,10 +69,17 @@ No additional setup required.
  2. Plugin Segger J-Link or DK board
  3. Start ```Zadig```
  4. Select ```Options -> List All Devices```
- 5. Select ```J-Link (Interface 2)``` from the device dropdown
+ 5. Plug and unplug your device to find what changes, and select the ```Interface 2``` from the device dropdown
  6. Click ```Replace Driver```
 
-__NOTE__: To roll back to the original driver go to: Device Manager -> Open Device -> Update Driver
+__NOTE__: To roll back to the original driver go to: Device Manager -> Right click on device -> Check box for "Delete the driver software for this device" and click Uninstall
+
+### Selecting a SoftDevice
+SoftDevices contain the BLE stack and housekeeping, and must be downloaded once before a sketch using BLE can be loaded.
+The SD consumes ~5k of Ram + some extra based on actual BLE configuration.
+* SoftDevice S110 v8.0.0 supports [Revision](http://infocenter.nordicsemi.com/index.jsp?topic=%2Fcom.nordic.infocenter.nrf51%2Fdita%2Fnrf51%2Fcompatibility_matrix%2FnRF51822_ic_revision_overview.html&cp=3_0_1) 2 and 3 of nRF51 in peripheral role. It is 96k in size.
+* SoftDevice S130 v2.0.1 supports Revision 3 of nRF51 in peripheral and central role. It is 108k in size.
+* SoftDevice S132 v2.0.1 supports nRF52 in peripheral and central role. It is 112k in size.
 
 ### Flashing a SoftDevice
 
@@ -104,9 +119,15 @@ This Arduino Core does **not** contain any Arduino style API's for BLE functiona
    * v0.3.0 and greater, available via the Arduino IDE's library manager.
    * Supports peripheral mode only.
 
+## Low Frequency Clock Source (LFCLKSRC)
+
+If the selected board has an external 32 kHz crystal connected, it will be used as the source for the low frequency clock. Otherwise the internal 32 kHz RC oscillator will be used. The low frequency clock is used by the `delay(ms)` and `millis()` Arduino API's.
+
+The Generic nRF51 and nRF52 board options have an additional menu item under `Tools -> Low Frequency Clock` that allows you to select the low frequency clock source. However, Nordic does not recommend the Synthesized clock, which also has a significant power impact.
+
 ## Credits
 
-This core is based on the [Arduino SAMD Core](https://github.com/arduino/ArduinoCore-samd) and licensed under the same [GPL License](LICENSE)
+This core is based on the [Arduino SAMD Core](https://github.com/arduino/ArduinoCore-samd) and licensed under the same [LGPL License](LICENSE)
 
 The following tools are used:
 
