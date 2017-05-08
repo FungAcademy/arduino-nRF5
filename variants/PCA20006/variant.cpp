@@ -20,39 +20,36 @@
 #include "variant.h"
 
 const uint32_t g_ADigitalPinMap[] = {
-  // D0 - D7
+  0,
+  1,
+  2,
+  3,
+  (uint32_t)-1,
+  5,
+  (uint32_t)-1,
+  (uint32_t)-1,
+  8,
+  9,
+  (uint32_t)-1,
   11,
   12,
-  13,
-  14,
+  (uint32_t)-1,
+  (uint32_t)-1,
   15,
   16,
-  17,
+  (uint32_t)-1,
   18,
-
-  // D8 - D13
-  19,
+  (uint32_t)-1,
   20,
-  22,
-  23,
+  21,
+  (uint32_t)-1,
+  (uint32_t)-1,
   24,
-  25,
-
-  // A0 - A7
-  3,
-  4,
-  28,
-  29,
-  30,
-  31,
-  5, // AIN3 (P0.05)
-  2, // AIN0 (P0.02) / AREF
-
-  // SDA, SCL
-  26,
-  27,
-
-  // RX, TX
-  8,
-  6
+  (uint32_t)-1,
+  (uint32_t)-1,
+  (uint32_t)-1,
+  (uint32_t)-1,
+  (uint32_t)-1,
+  (uint32_t)-1,
+  (uint32_t)-1
 };
